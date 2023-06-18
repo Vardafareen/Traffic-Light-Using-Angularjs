@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Traffic Lights- Angularjs</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <style>
+        /* Body */
+        body {
+            background-image: url(hroad.jpg);
+            background-attachment: local;
+            background-size: 100% 280%;
+            background-repeat: no-repeat;
+
+        }
+
+        /* for heading with timer */
+        h1 {
+            color: rgb(239, 112, 33);
+        }
+
+        .float-container {
+            padding: 50px;
+        }
+
+        .circle {
+            height: 60px;
+            width: 70px;
+            border-radius: 50%;
+            margin: 10px;
+            box-shadow: inset 0px 0px 10px rgba(126, 108, 108, 0.5);
+        }
+
+        .red {
+            border: 6px solid black;
+            padding: 10px 3px;
+            width: 50px;
+            border-radius: 50px;
+            float: top;
+            background-color: #ff4444;
+            text-align: center;
+        }
+
+        .green {
+            border: 6px solid black;
+            padding: 10px 3px;
+            width: 50px;
+            border-radius: 50px;
+            float: top;
+            background-color: #44ff44;
+        }
+
+        .yellow {
+            border: 6px solid black;
+            padding: 10px 3px;
+            width: 50px;
+            border-radius: 50px;
+            float: top;
+            background-color: yellow;
+        }
+
+        /* second */
+        .red1 {
+            border: 6px solid black;
+            padding: 10px 3px;
+            width: 50px;
+            border-radius: 50px;
+            float: right;
+            background-color: #ff4444;
+        }
+
+        .green1 {
+            border: 6px solid black;
+            padding: 10px 3px;
+            width: 50px;
+            border-radius: 50px;
+            float: right;
+            background-color: #44ff44;
+        }
+
+        .yellow1 {
+            border: 6px solid black;
+            padding: 10px 3px;
+            width: 50px;
+            border-radius: 50px;
+            float: right;
+            background-color: yellow;
+        }
+
+        /* third */
+        .red2 {
+            border: 6px solid black;
+            padding: 10px 3px;
+            width: 50px;
+            border-radius: 50px;
+            float: left;
+            background-color: #ff4444;
+        }
+
+        .green2 {
+            border: 6px solid black;
+            padding: 10px 3px;
+            width: 50px;
+            border-radius: 50px;
+            float: left;
+            background-color: #44ff44;
+        }
+
+        .yellow2 {
+            border: 6px solid black;
+            padding: 10px 3px;
+            width: 50px;
+            border-radius: 50px;
+            float: left;
+            background-color: yellow;
+        }
+
+        /* fourth */
+        .red3 {
+            border: 6px solid black;
+            padding: 10px 3px;
+            width: 50px;
+            border-radius: 50px;
+            float: bottom;
+            background-color: #ff4444;
+        }
+
+        .green3 {
+            border: 6px solid black;
+            padding: 10px 3px;
+            width: 50px;
+            border-radius: 50px;
+            background-color: #44ff44;
+        }
+
+        .yellow3 {
+            border: 6px solid black;
+            padding: 10px 3px;
+            width: 50px;
+            border-radius: 50px;
+            background-color: yellow;
+        }
+
+        h1 {
+            color: red;
+            font-size: xx-large;
+        }
+
+        p {
+            color: #523c1f;
+            font-style: oblique;
+            font-size: 20px;
+        }
+
+        #south {
+            float: bottom;
+        }
+
+        #west {
+            float: left;
+        }
+
+        #east {
+            float: right;
+        }
+
+        ul {
+            color: #f07008
+        }
+
+        /* arrow directions */
+        span {
+            content: "\21E7";
+            content: "\21E8";
+            content: "\21E9";
+            content: "\21E6";
+            font-size: 100px;
+            color: green;
+        }
+    </style> -->
+    <script>
+        var app = angular.module('myApp1', []);
+        app.controller("my", function ($scope, $interval) {
+            var countdownInterval;
+
+            $scope.timeLeft = "10";
+
+            countdownInterval = $interval(function () {
+                $scope.timeLeft--;
+                if ($scope.timeLeft == 0) {
+                    $interval.cancel(countdownInterval);
+                }
+            }, 1000);
+
+            $scope.$watch("timeLeft", function (newValue, oldValue) {
+                if (newValue == 0) {
+                    $scope.timeLeft = "30";
+                    countdownInterval = $interval(function () {
+                        $scope.timeLeft--;
+                        if ($scope.timeLeft == 0) {
+                            $interval.cancel(countdownInterval);
+                        }
+                    }, 1000);
+                }
+            });
+        });
+
+    </script>
+</head>
+
+<body>
+    <center>
+        <div id="Id1" ng-app="myApp1" ng-controller="my">
+            <h1>Traffic light management: {{timeLeft}} </h1>
+        </div>
+    </center>
+    <div>
+        <center>
+            <div id="Id2" ng-controller="myCtrl" ng-app="myApp" class="float-container">
+                <p id="north">NORTH</p>
+                <div ng-show="showCircle1" class="circle red"><b>STOP!</b></div>
+                <div ng-show="showCircle2" class="circle green"><b>GO!</b>
+                </div>
+                <div ng-show="showCircle3" class="circle yellow"><b>WAIT!</b></div>
+
+                <p id="east">EAST</p>
+                <div ng-show="showCircle4" class="circle red1"><b>STOP!</b></div>
+                <div ng-show="showCircle5" class="circle green1"><b>GO!</b></div>
+                <div ng-show="showCircle6" class="circle yellow1"><b>WAIT!</b></div>
+
+                <p id="west">WEST</p>
+                <div ng-show="showCircle7" class="circle red2"><b>STOP!</b></div>
+                <div ng-show="showCircle8" class="circle green2"><b>GO!</b></div>
+                <div ng-show="showCircle9" class="circle yellow2"><b>WAIT!</b></div>
+
+                <br><br />
+                <!-- NORTH -->
+                <div ng-show="showLine" class="arr1">
+                    <span>&#8681;</span>
+                </div>
+                <!-- EAST -->
+                <div ng-show="showLine1" class="arr1">
+                    <span>&#8678;</span>
+                </div>
+                <!-- SOUTH -->
+                <div ng-show="showLine3" class="arr1">
+                    <span>&#8679;</span>
+                </div>
+                <!-- WEST -->
+                <div ng-show="showLine2" class="arr1">
+                    <span>&#8680;</span>
+                </div>
+                <br><br />
+
+
+                <p id="south">SOUTH</p>
+                <div ng-show="showCircle10" class="circle red3"><b>STOP!</b></div>
+                <div ng-show="showCircle11" class="circle green3"><b>GO!</b></div>
+                <div ng-show="showCircle12" class="circle yellow3"><b>WAIT!</b></div>
+            </div>
+        </center>
+
+    </div>
+
+    <!-- Angularjs code for changing of lights with -->
+    <script>
+        var app = angular.module('myApp', []);
+
+        app.controller('myCtrl', function ($scope, $timeout) {
+            $scope.showCircle1 = true;   //red-n
+            $scope.showCircle4 = true;     //red1-e
+            $scope.showCircle7 = true;      //red2-w
+            $scope.showCircle10 = true;     //red3-s
+
+            // for(var i = 0; i < 3; i++){
+            var loopFunction = function () {
+                $timeout(function () {
+                    $scope.showCircle1 = false;     //red-N
+                    $scope.showCircle4 = true;     //red1-E
+                    $scope.showCircle10 = true;     //red3-s
+                    $scope.showCircle7 = true;      //red2-w
+                    $scope.showCircle2 = true;      //green
+                    $scope.showCircle3 = false;      //yellow
+                    $scope.showLine = true;         //north
+                    $scope.showLine2 = false;       //west
+                    $scope.showCircle8 = false;     //greenS
+                }, 10000);      //all red N-green line-show
+
+
+                $timeout(function () {
+                    $scope.showCircle2 = true;      //green
+                    $scope.showCircle4 = false;     //red1-e
+                    $scope.showCircle6 = true;      //yellow1
+                    $scope.showLine = true;         //north
+
+                }, 30000);      // remain 10sec E-yellow lineN-show
+
+                $timeout(function () {
+                    $scope.showCircle2 = false;      //green
+                    $scope.showCircle1 = true;     //red-n
+                    $scope.showCircle4 = false;     //red1-e
+                    $scope.showCircle5 = true;      //green1
+                    $scope.showLine = false;        //north
+                    $scope.showLine1 = true;        //east
+                    $scope.showCircle6 = false;      //yellow1
+                }, 40000);      //0sec E-green lineE-show
+
+                $timeout(function () {
+                    $scope.showCircle4 = false;      //red1-e
+                    $scope.showCircle10 = false;     //red3-s
+                    $scope.showCircle5 = true;      //green1
+                    $scope.showLine1 = true;        //east
+                    $scope.showCircle12 = true;      //yellow3
+                }, 60000);     // 10sec S-yellow lineE-show
+
+                $timeout(function () {
+                    $scope.showCircle4 = true;      //red1-e
+                    $scope.showCircle10 = false;     //red3-s
+                    $scope.showCircle5 = false;      //green1
+                    $scope.showCircle12 = false;      //yellow3
+                    $scope.showCircle11 = true;      //green3
+                    $scope.showLine1 = false;       //east
+                    $scope.showLine3 = true;        //south
+                }, 70000);      //0sec S-green lineS-show
+
+                $timeout(function () {
+                    $scope.showCircle4 = true;      //red1-e
+                    $scope.showCircle10 = false;     //red3-s
+                    $scope.showCircle7 = false;     //red2-w
+                    $scope.showCircle5 = false;      //green1
+                    $scope.showCircle12 = false;      //yellow3
+                    $scope.showCircle9 = true;      //yellow2
+                    $scope.showCircle11 = true;      //green3
+                    $scope.showLine3 = true;        //south
+                }, 90000);      //10 sec W-yellow lineS-show
+
+                $timeout(function () {
+                    $scope.showCircle4 = true;      //red1-e
+                    $scope.showCircle10 = true;     //red3-s
+                    $scope.showCircle7 = false;     //red2-w
+                    $scope.showCircle5 = false;      //green1
+                    $scope.showCircle12 = false;      //yellow3
+                    $scope.showCircle9 = false;      //yellow2
+                    $scope.showCircle11 = false;      //green3
+                    $scope.showCircle8 = true;      //green2
+                    $scope.showLine3 = false;       //south
+                    $scope.showLine2 = true;        //west
+                }, 100000);     //0sec W-green lineW-show
+
+                $timeout(function () {
+                    $scope.showCircle1 = false;      //red-N
+                    $scope.showCircle4 = true;      //red1-e
+                    $scope.showCircle10 = true;     //red3-s
+                    $scope.showCircle5 = false;      //green1
+                    $scope.showCircle3 = true;      //yellow
+                    $scope.showCircle11 = false;      //green3
+                    $scope.showLine2 = true;        //west
+                }, 120000);     //10 sec N-yellow lineW-show
+
+                $timeout(loopFunction, 120000); // Call this function again after a delay of 1000ms (1 second)
+            };
+            loopFunction();
+        });
+        angular.bootstrap(document.getElementById("Id2"), ['myApp']);   //for routing of 2 ng-apps
+    </script>
+
+</body>
+
+</html>
